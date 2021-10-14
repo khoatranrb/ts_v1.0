@@ -21,7 +21,7 @@ from hack_grads import *
 add_hooks(net)
 
 from torch.optim import Adam
-from ddpnopt2 import DDPNOPT
+from ddpnopt import DDPNOPT
 
 opt = DDPNOPT(net.seq, lr=1e-2)
 # opt = Adam(net.parameters(), lr=1e-2)
