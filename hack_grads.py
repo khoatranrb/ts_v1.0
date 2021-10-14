@@ -136,6 +136,7 @@ def compute_grad1(model: nn.Module, loss_type: str = 'mean') -> None:
                 setattr(layer.bias, 'grad1', B)
 
         elif layer_type == 'Conv2d':
+            A = nn.ZeroPad2d(layer.padding[0])(A)
             A = torch.nn.functional.unfold(A, layer.kernel_size)
             B = B.reshape(n, -1, A.shape[-1])
             grad1 = torch.einsum('ijk,ilk->ijl', B, A)
