@@ -1,5 +1,7 @@
 from keras.datasets import mnist
 import numpy as np
+import torch.nn as nn
+from models import Net
 
 (train_X, train_y), (test_X, test_y) = mnist.load_data()
 
