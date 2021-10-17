@@ -118,10 +118,13 @@ def compute_grad1(model: nn.Module, loss_type: str = 'mean') -> None:
         layer_type = _layer_type(layer)
         if layer_type not in _supported_layers:
             continue
-        layer.backprops_list = layer.backprops_list[:-1]
         assert hasattr(layer, 'activations'), "No activations detected, run forward after add_hooks(model)"
         assert hasattr(layer, 'backprops_list'), "No backprops detected, run backward after add_hooks(model)"
-        assert len(layer.backprops_list) == 1, "Multiple backprops detected, make sure to call clear_backprops(model)"
+        try:
+            assert len(layer.backprops_list) == 1, "Multiple backprops detected, make sure to call clear_backprops(model)"
+        except:
+            layer.backprops_list = layer.backprops_list[:-1]
+            assert len(layer.backprops_list) == 1, "Multiple backprops detected, make sure to call clear_backprops(model)"
 
         A = layer.activations
         n = A.shape[0]
